@@ -27,5 +27,6 @@ print()
 '''
 range(start, stop , step) 
 '''
+# 1부터 2씩 증가 < 10
 for n in range(1,10,2):
     print('{}x{}={} '.format(dan, n, dan * n), end='')

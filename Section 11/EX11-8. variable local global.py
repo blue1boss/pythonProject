@@ -6,6 +6,7 @@ def gift(dic, who, money):
     total += money
     dic[who] =money
 
+#https://pythontutor.com/render/html#mode=display
 wedding = {}
 name = '영희'
 gift(wedding, name, 5)
