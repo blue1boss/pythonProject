@@ -30,3 +30,9 @@ print(result)
 
 #존재하지 않은 값 - -1 반환
 print(s.find('z'))
+
+#index()매서드- find 메서드 같지만 문자열 존재하지 않을 경우 
+result= s.index('p')
+print(result)
+result= s.index('z')
+print(result)
