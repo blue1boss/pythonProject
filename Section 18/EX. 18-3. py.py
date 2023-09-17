@@ -34,7 +34,7 @@ import requests
 from bs4 import BeautifulSoup
 
 url = 'https://news.naver.com/main/ranking/popularDay.naver'
-headers = {'User-Agent': 'Mozila/5.0'}
+headers = {'User-Agent': 'Mozila/5.0'}  #브라우저처럼 보이게 하려고 던져준 헤더
 response = requests.get(url, headers=headers)
 html= response.text
 soup = BeautifulSoup(html,'html.parser')

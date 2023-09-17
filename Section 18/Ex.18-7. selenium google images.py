@@ -10,6 +10,8 @@ selenimum 패키지
 http://chromedriver.chromium.org/downloads
 크롬 우측 상단 ..-> 도움말: 크롬정보 : 버전확인 필요  -> 해당버전 크롬드라이버 다운로드 -> chrom 실행파일 있는 폴더에 붙여넣기
 
+프로그램 파일 - 구글 - 드라이브
+
 116.0.5845.188
 '''
 
@@ -20,6 +22,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 from selenium.webdriver.chrome.service import Service
 
@@ -28,8 +31,7 @@ import traceback
 
 def download_images(keyword,num_images=10, output_dir='images'):
     # Chrome 드라이버 경로
-    chrome_driver_path = ('c:\Program Files\Google\Chrome\Application\chromedriver.exe')
-
+    chrome_driver_path = ('C:\Program Files (x86)\Google\Chrome\Application\chromedriver.exe')
     service= Service(executable_path=chrome_driver_path)
 
     #chrome 드라이버 인스턴스 생성
@@ -47,16 +49,17 @@ def download_images(keyword,num_images=10, output_dir='images'):
     time.sleep(2)
 
     #출력 디렉토리 생성
-    if not os.path.exists(output_dir)
+    if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
     #썸네일 요소 선택
-    thumbnails = driver.find_element(By.CSS_SELECTOR,'.rg_i')
+    thumbnails = driver.find_elements(By.CSS_SELECTOR,'.rg_i')
 
-    #썸네일 클릭 및 이미지 다운로드
-    for index, thumbnails in enumerate(thumbnails[:num_images]):
+    #썸네일 클릭 및 이미지 다운로드(처음 검색한 부분의 페이지만 사용)
+    for index, thumbnail in enumerate(thumbnails[:num_images]):
         try:
             thumbnail.click()
+
             time.sleep(2)
 
             #이미지 요소 대기 및 선택
@@ -69,14 +72,15 @@ def download_images(keyword,num_images=10, output_dir='images'):
             #이미지 URL 가져오기
             image_url = image.get_attribute('src')
 
-            if image_url.startwith('data:')
+            if image_url.startswith('data:'):
                 continue
 
-            headers = {'User-Agent': 'Mozila/5.0'}
-            request = urllib.request.Request(image_url,headers=headers)
+            headers = {'User-Agent': 'Mozilla/5.0'}
+            request = urllib.request.Request(image_url,headers=headers) #데이터를 응답으로 response로 받는 것
             with urllib.request.urlopen(request) as response:
                 with open(f'{output_dir}/{keyword}_{index}.jpg','wb')as out_file:
-                    out_file. write(response.read())
+                    out_file.write(response.read())
+
         except Exception as e:
             print(f'Error downloading image {index}: {e}')
             traceback.print_exc()
