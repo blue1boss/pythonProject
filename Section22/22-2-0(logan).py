@@ -1,0 +1,49 @@
+'''
+O(logN)
+    로그 시간 복잡도, 이진 탐색처럼 문제를 절반으로 나누어 해결하는 알고리즘
+'''
+
+'''
+arr = [1,3,5,7,8,9,10,11,21]
+
+low <= high일 경우엔 true 가 된다 
+
+mid = 8/2 = 4
+arr[mid] < x 이면 
+arr[mid] = 8 
+x=21
+low= mid + 1 = 5
+high = mid - 1 = 3
+
+mid = 5+ 8 // 2 - 6 
+arr[mid[ 10 (인덱스가 6인 숫자) 
+low = 7 
+mid = 15/2 = 7
+arr[mid] =11
+
+'''
+
+def binary_search(arr,x):
+    #검색 범위 시작점 설정
+    low= 0
+    #검색 범위 끝점 설정
+    high= len(arr)-1
+
+    while low <= high:
+        mid = (low+ high) // 2
+
+        if arr[mid] < x:
+            low = mid + 1
+        elif arr[mid] > x:
+            high = mid - 1
+        else:
+            return mid
+
+    return -1
+
+#실행코드
+arr =[1,10,5,7,8,9,3,11,21] #오름차순 정렬을 진행
+arr = sorted(arr)
+
+print(arr)
+print(binary_search(arr,21))
